@@ -34,7 +34,35 @@ const Home: NextPage = () => {
     setArrangement(newArrangement)
 
   }
-  
+
+  const onPrevious = () => {
+    const newPlayerClass = playerClass.reduce((prev: string[], curr: string, index) => {
+      if(index === 0){
+        return prev
+      }
+      if(index === playerClass.length-1){
+        prev.push(curr)
+        prev.push(playerClass[0])
+        return prev.slice()
+      }
+      prev.push(curr)
+      return prev.slice()
+    }, [])
+
+    const newArrangement = arrangement.reduce((prev: string[], curr: string, index) => {
+      if(index < arrangement.length-1){
+        prev.push(curr)
+        return prev.slice()
+      }
+      prev.unshift(curr)
+      return prev.slice()
+    }, [])
+
+    setPlayerClass(newPlayerClass)
+    setArrangement(newArrangement)
+    
+  }
+
   return (
     <div className={styles.parentcontainer}>
       <div className={styles.container}>
@@ -47,7 +75,7 @@ const Home: NextPage = () => {
       </div>
       
       <div className={styles.buttoncontainer}>
-        <div className={styles.next}>Previous</div>
+        <div className={styles.next} onClick={onPrevious}>Previous</div>
         <div className={styles.button}>Join {playerClass[0]}</div>
         <div className={styles.prev}  onClick={onNext}>Next</div>
       </div>
